@@ -21,7 +21,17 @@ WHERE NOT EXISTS (SELECT *
 				WHERE c2.customer_id = r1.customer_id
 				AND c1.customer_id <> c2.customer_id)
 				
+				
+				
 -- EJERCICIO 4
+
+				
+				
+				
+				
+				
+				
+				
 -- EJERCICIO 5
 SELECT DISTINCT first_name, last_name, title
 FROM actor, film_actor, film
@@ -39,6 +49,7 @@ ON title LIKE '%BETRAYED REAR%' AND NOT title LIKE '%CATCH AMISTAD%'
 
 
 
+
  
 					
 					
@@ -50,4 +61,4 @@ ON title LIKE '%BETRAYED REAR%' AND NOT title LIKE '%CATCH AMISTAD%'
 			  
 			  
 			  
-			  
+			   
