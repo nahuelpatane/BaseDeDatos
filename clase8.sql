@@ -1,5 +1,5 @@
 
-Ivo Torras (ivotorras1@gmail.com)
+Nahuel Patane (nahupatane@gmail.com)
 SELECT MIN(amount)
 FROM customer, payment
 WHERE customer.customer_id = payment.customer_id
