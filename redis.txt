@@ -1,0 +1,309 @@
+START: docker run --name some-redis -d redis   ////// docker run -it --link some-redis:redis --rm redis redis-cli -h redis -p 6379
+
+1-
+
+2- 
+
+3- STRINGS: -------------------------------------------------------------------------------
+GET------------------------
+redis:6379> GET holamiloco
+(nil)
+redis:6379> SET miNombre "Nahuel"
+OK
+redis:6379> GET miNombre
+"Nahuel"
+
+
+
+SET------------------------
+redis:6379> SET miNombre "Nahuel"
+OK
+redis:6379> GET miNombre
+"Nahuel"
+
+
+
+APPEND-----------------------
+redis:6379> EXISTS miNombre
+(integer) 0
+redis:6379> APPEND miNombre "Nahuel"
+(integer) 12
+redis:6379> APPEND miNombre " Patane"
+(integer) 19
+redis:6379> GET miNombre
+"Nahuel Patane"
+
+
+4- HASHES:-------------------------------------------------------------------------------
+HSET--------------------------
+redis:6379> HSET ejercuatro field1 "Usando un hset"
+(integer) 1
+redis:6379> HGET ejercuatro field1
+"Usando un hset"
+
+
+HGET--------------------------
+redis:6379> HSET ejercuatro nolose "Esto es un hset"
+(integer) 1
+redis:6379> HGET ejercuatro nolose
+"Esto es un hset"
+redis:6379> HGET ejercuatro nolose1
+(nil)
+
+
+
+HDEL---------------------------
+redis:6379> HSET ejercuatro tomo1 "Esto me devuelve"
+(integer) 1
+redis:6379> HDEL ejercuatro tomo1
+(integer) 1
+redis:6379> HDEL ejercuatro tomo2
+(integer) 0
+
+
+
+HLEN---------------------------
+redis:6379> HSET pepe relleno1 "Pepesito Marito"
+(integer) 1
+redis:6379> HSET pepe relleno2 "De Martino"
+(integer) 1
+redis:6379> HLEN pepe
+(integer) 2
+
+
+
+5- LISTS:-------------------------------------------------------------------------------
+LPOP---------------------------
+redis:6379> RPUSH milista "primera"
+(integer) 1
+redis:6379> RPUSH milista "segunda"
+(integer) 2
+redis:6379> RPUSH milista "tercera"
+(integer) 3
+redis:6379> LPOP milista
+"primera"
+redis:6379> LRANGE milista 0 -1
+1) "segunda"
+2) "tercera"
+
+
+LTRIM---------------------------
+redis:6379> RPUSH listita "una"
+(integer) 1
+redis:6379> RPUSH listita "dos"
+(integer) 2
+redis:6379> RPUSH listita "tres"
+(integer) 3
+redis:6379> LTRIM listita 1 -1
+OK
+redis:6379> LRANGE listita 0 -1
+1) "dos"
+2) "tres"
+
+
+
+LINSERT---------------------------
+redis:6379> RPUSH mylist "holis"
+(integer) 1
+redis:6379> RPUSH mylist "chau"
+(integer) 2
+redis:6379> LINSERT mylist BEFORE "chau" "entremedio"
+(integer) 3
+redis:6379> LRANGE mylist 0 -1
+1) "holis"
+2) "entremedio"
+3) "chau"
+
+
+
+LTRIM---------------------------
+redis:6379> RPUSH mesa "uno"
+(integer) 1
+redis:6379> RPUSH mesa "dos"
+(integer) 2
+redis:6379> RPUSH mesa "tres"
+(integer) 3
+redis:6379> LTRIM mesa 1 -1
+OK
+redis:6379> LRANGE mesa 0 -1
+1) "dos"
+2) "tres"
+redis:6379> 
+
+
+
+
+
+
+6-SETS:-------------------------------------------------------------------------------
+SAAD---------------------------
+redis:6379> SADD canario "uno"
+(integer) 1
+redis:6379> SADD canario "dos"
+(integer) 1
+redis:6379> SADD canario "dos"
+(integer) 0
+redis:6379> SMEMBERS canario
+1) "uno"
+2) "dos"
+
+
+
+SUNION---------------------------
+redis:6379> SADD mochila "a"
+(integer) 1
+redis:6379> SADD mochila "b"
+(integer) 1
+redis:6379> SADD mochila "c"
+(integer) 1
+redis:6379> SADD bolsillo "c"
+(integer) 1
+redis:6379> SADD bolsillo "d"
+(integer) 1
+redis:6379> SADD bolsillo "e"
+(integer) 1
+redis:6379> SUNION mochila bolsillo
+1) "a"
+2) "c"
+3) "e"
+4) "b"
+5) "d"
+
+
+
+SMOVE---------------------------
+redis:6379> SADD gaseosa "cocacola"
+(integer) 1
+redis:6379> SADD gaseosa "sprite"
+(integer) 1
+redis:6379> SADD gaseosa "levite"
+(integer) 1
+redis:6379> SADD alimentos "milanesas"
+(integer) 1
+redis:6379> SMOVE gaseosa alimentos "tres"
+(integer) 1
+redis:6379> SMEMBERS gaseosa
+1) "sprite"
+2) "cocacola"
+redis:6379> SMEMBERS alimentos
+1) "levite"
+2) "milanesas"
+
+
+
+SREM---------------------------
+redis:6379> SADD nada "uno"
+(integer) 1
+redis:6379> SADD nada "dos"
+(integer) 1
+redis:6379> SADD nada "tres"
+(integer) 1
+redis:6379> SREM nada  "uno"
+(integer) 1
+redis:6379> SREM nada "cuatro"
+(integer) 0
+redis:6379> SMEMBERS nada
+1) "dos"
+2) "tres"
+
+
+
+7-SORTED SETS:-------------------------------------------------------------------------------
+ZCARD---------------------------
+redis:6379> ZADD pepesito 1 "una"
+(integer) 1
+redis:6379> ZADD pepesito 2 "dos"
+(integer) 1
+redis:6379> ZCARD pepesito
+(integer) 2
+
+
+
+ZRANK---------------------------
+redis:6379> ZADD pepet 1 "una"
+(integer) 1
+redis:6379> ZADD pepet 2 "dos"
+(integer) 1
+redis:6379> ZADD pepet 3 "tres"
+(integer) 1
+redis:6379> ZRANK pepet "tres"
+(integer) 2
+redis:6379> ZRANK pepet "cuatro"
+(nil)
+
+
+
+ZRANGE---------------------------
+redis:6379> ZADD papao 1 "uno"
+(integer) 1
+redis:6379> ZADD papao 2 "dos"
+(integer) 1
+redis:6379> ZADD papao 3 "tres"
+(integer) 1
+redis:6379> ZRANGE papao 0 -1
+1) "uno"
+2) "dos"
+3) "tres"
+redis:6379> ZRANGE papao 2 3
+1) "tres"
+redis:6379> ZRANGE papao -2 -1
+1) "dos"
+2) "tres"
+
+
+
+ZCOUNT---------------------------
+redis:6379> ZADD pepe 1 "uno"
+(integer) 1
+redis:6379> ZADD pepe 2 "dos"
+(integer) 1
+redis:6379> ZADD pepe 3 "tres"
+(integer) 1
+redis:6379> ZCOUNT pepe -inf +inf
+(integer) 3
+redis:6379> ZCOUNT pepe (1 3
+(integer) 2
+
+
+
+
+7- PUBLISH SUSCRIBE-------------------------------------------------------------------------------
+SUBSCRIBE---------------------------
+redis:6379> SUBSCRIBE redisChat
+Reading messages... (press Ctrl-C to quit)
+1) "subscribe"
+2) "redisChat"
+3) (integer) 1
+
+
+
+PUNSUBSCRIBE---------------------------
+redis:6379> PUNSUBSCRIBE todoo
+1) "punsubscribe"
+2) "todoo"
+3) (integer) 0
+
+
+
+PUBLISH---------------------------
+redis:6379> PUBLISH canal "tamo en vivo"
+(integer) 0
+
+
+
+PUBSUB---------------------------
+redis:6379> PUBSUB CHANNELS
+1) "redisChat"
+
+
+
+
+
+
+
+8- TRANSACTIONS-------------------------------------------------------------------------------
+EXEC---------------------------
+DISCARD---------------------------
+MULT---------------------------
+UNWATCH---------------------------
+WATCH key [key ...]---------------------------
